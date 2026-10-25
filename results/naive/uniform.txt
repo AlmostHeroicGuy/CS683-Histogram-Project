@@ -1,0 +1,1 @@
+pixels = 16777216, sum of bins = 16777216  -> OK
