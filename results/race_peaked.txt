@@ -1,0 +1,20 @@
+Number of threads 1
+Shared (racy): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Number of threads 1
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Number of threads 2
+Shared (racy): sum of bins = 11098114 (should be 16777216), wrong bins = 24. Your histogram is WRONG
+Number of threads 2
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Number of threads 3
+Shared (racy): sum of bins = 10565338 (should be 16777216), wrong bins = 24. Your histogram is WRONG
+Number of threads 3
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Number of threads 4
+Shared (racy): sum of bins = 9966287 (should be 16777216), wrong bins = 25. Your histogram is WRONG
+Number of threads 4
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Number of threads 8
+Shared (racy): sum of bins = 6724623 (should be 16777216), wrong bins = 25. Your histogram is WRONG
+Number of threads 8
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK

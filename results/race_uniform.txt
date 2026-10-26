@@ -1,0 +1,10 @@
+Shared (racy): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Shared (racy): sum of bins = 12632065 (should be 16777216), wrong bins = 256. Your histogram is WRONG
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Shared (racy): sum of bins = 10126501 (should be 16777216), wrong bins = 256. Your histogram is WRONG
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Shared (racy): sum of bins = 8346716 (should be 16777216), wrong bins = 256. Your histogram is WRONG
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Shared (racy): sum of bins = 7729109 (should be 16777216), wrong bins = 256. Your histogram is WRONG
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
