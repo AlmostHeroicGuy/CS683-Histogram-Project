@@ -27,7 +27,7 @@ vector<uint8_t> read_image(const char* path) {
 
 // Method 0: plain single-threaded histogram = the CORRECT answer
 void hist_naive(vector<uint8_t>& img, vector<uint32_t>& h) {
-    
+    for (int b = 0; b < 256; b++) h[b] = 0;   // all bins start at 0
     for (uint32_t i = 0; i < img.size(); i++){
         h[img[i]]++;
     }
@@ -36,6 +36,7 @@ void hist_naive(vector<uint8_t>& img, vector<uint32_t>& h) {
 
 // Method 1: shared histogram, all cores go boom baam, wrong result
 void hist_shared_racy(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
+    for (int b = 0; b < 256; b++) h[b] = 0;   // all bins start at 0
     #pragma omp parallel for num_threads(T) 
     for (uint32_t i = 0; i < img.size(); i++){
         h[img[i]]++;
@@ -44,6 +45,7 @@ void hist_shared_racy(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
 
 // Method 1: shared histogram but fixed the race condition by atomising the read-write step
 void hist_shared(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
+    for (int b = 0; b < 256; b++) h[b] = 0;   // all bins start at 0
     #pragma omp parallel for num_threads(T)        
     for (uint32_t i = 0; i < img.size(); i++) {
         #pragma omp atomic                         
@@ -53,6 +55,7 @@ void hist_shared(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
 
 // Method 2: giving each thread its own private bins (catch is that each thread scans the whole image)
 void hist_binpart(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
+    for (int b = 0; b < 256; b++) h[b] = 0;   // all bins start at 0
     #pragma omp parallel num_threads(T)
     {
         int id = omp_get_thread_num();
@@ -96,11 +99,19 @@ double mean(vector<double> t) {
     return sum/t.size();
 }
 
+// print_stuff for better formatting of the data for ease in plotting
+void print_stuff(const char* method, const char* image, int T, vector<double>& t) {
+    cout << "TIME for " << method << " using " << image << " on " << T << " threads" << " : (Median=" << median(t)*1000 << "ms, Mean=" << mean(t)*1000 << "ms)" << endl;
+    cout << "CSV," << method << "," << image << "," << T << "," << median(t)*1000 << "," << mean(t)*1000 << endl;
+}
+
 int main(int argc, char** argv) {
     if (argc < 3) {
         cout << "usage: ./hist <image.raw> <number of threads>" << endl;
         return 1;
     }
+    string method = "all";
+    if (argc >= 4) method = argv[3];  // "naive", "racy", "shared", "binpart" or "all"
 
     vector<uint8_t> img = read_image(argv[1]);
     uint32_t n = img.size();
@@ -108,61 +119,68 @@ int main(int argc, char** argv) {
     cout << "=========== Number of threads (Naive has always 1): " << T << " ===============" << endl;
 
     vector<uint32_t> ref(256), h(256);              // each pixel intensity is a bin
-    for (int b = 0; b < 256; b++) h[b] = 0;   // all bins start at 0
-    for (int b = 0; b < 256; b++) ref[b] = 0;   // all bins start at 0
+    
     hist_naive(img, ref);  //using the single thread for checking corretness of the furthur histograms
 
-    hist_shared_racy(img, h, T);
-    check("Shared (racy)", ref, h, n, T);
+    if (method == "all" || method == "racy"){
+        hist_shared_racy(img, h, T);
+        check("Shared (racy)", ref, h, n, T);
+    }
+    
+    if (method == "all" || method == "shared"){
+        hist_shared(img, h, T);
+        check("Shared (corrected)", ref, h, n, T);
+    }
 
-    for (int b = 0; b < 256; b++) h[b] = 0;
-    hist_shared(img, h, T);
-    check("Shared (corrected)", ref, h, n, T);
-
-    for (int b = 0; b < 256; b++) h[b] = 0;
-    hist_binpart(img, h, T);
-    check("Bin partitioned (private counters for each thread)", ref, h, n, T);
-
+    if (method == "all" || method == "binpart"){  
+        hist_binpart(img, h, T);
+        check("Bin partitioned (private counters for each thread)", ref, h, n, T);
+    }
+    
     // finding the time
     int runs = 10;
     vector<double> time(runs);
     cout << "=========== Number of runs for finding time of each method: " << runs << " ===============" << endl;
 
     // Naive
-    for (int r = 0; r < runs; r++){
-        double start = omp_get_wtime();
-        hist_naive(img, h);
-        time[r] = omp_get_wtime() - start;
+    if (method == "all" || method == "naive"){
+        for (int r = 0; r < runs; r++){
+            double start = omp_get_wtime();
+            hist_naive(img, h);
+            time[r] = omp_get_wtime() - start;
+        }
+        print_stuff("naive", argv[1], 1, time);
     }
-    cout << "TIME for Naive using " << argv[1] << " : (Median=" << median(time)*1000 <<"ms, Mean=" << mean(time)*1000 << "ms)" << endl;
-
 
     // Shared racy
-    for (int r = 0; r < runs; r++){
-        double start = omp_get_wtime();
-        hist_shared_racy(img, h, T);
-        time[r] = omp_get_wtime() - start;
+    if (method == "all" || method == "racy"){
+        for (int r = 0; r < runs; r++){
+            double start = omp_get_wtime();
+            hist_shared_racy(img, h, T);
+            time[r] = omp_get_wtime() - start;
+        }
+        print_stuff("racy", argv[1], T, time);
     }
-    cout << "TIME for Shared (racy) using " << argv[1] << " : (Median=" << median(time)*1000 <<"ms, Mean=" << mean(time)*1000 << "ms)" << endl;
-
 
     // Shared corrected
-    for (int r = 0; r < runs; r++){
-        double start = omp_get_wtime();
-        hist_shared(img, h, T);
-        time[r] = omp_get_wtime() - start;
+    if (method == "all" || method == "shared"){
+        for (int r = 0; r < runs; r++){
+            double start = omp_get_wtime();
+            hist_shared(img, h, T);
+            time[r] = omp_get_wtime() - start;
+        }
+        print_stuff("shared", argv[1], T, time);
     }
-    cout << "TIME for Shared (corrected) using " << argv[1] << " : (Median=" << median(time)*1000 <<"ms, Mean=" << mean(time)*1000 << "ms)" << endl;
-
 
     // Bin partitioned with private couters
-    for (int r = 0; r < runs; r++){
-        double start = omp_get_wtime();
-        hist_binpart(img, h, T);
-        time[r] = omp_get_wtime() - start;
+    if (method == "all" || method == "binpart"){
+        for (int r = 0; r < runs; r++){
+            double start = omp_get_wtime();
+            hist_binpart(img, h, T);
+            time[r] = omp_get_wtime() - start;
+        }
+        print_stuff("binpart", argv[1], T, time);
     }
-    cout << "TIME for Bin partitioned (private counters for each thread) using " << argv[1] << " : (Median=" << median(time)*1000 <<"ms, Mean=" << mean(time)*1000 << "ms)" << endl;
-    
 
     return 0;
 }
