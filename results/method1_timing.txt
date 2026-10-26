@@ -1,0 +1,56 @@
+Number of threads 1
+Shared (racy): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Number of threads 1
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+TIME for Naive using data/peaked.raw on 1 thread: (Median=6.08916ms, Mean=6.09014ms) over 10 runs of the same
+TIME for Shared (racy) using data/peaked.raw on 1 thread: (Median=5.30815ms, Mean=5.32636ms) over 10 runs of the same
+TIME for Shared (corrected) using data/peaked.raw on 1 thread: (Median=69.322ms, Mean=69.437ms) over 10 runs of the same
+Number of threads 1
+Shared (racy): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+Number of threads 1
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+TIME for Naive using data/uniform.raw on 1 thread: (Median=5.86836ms, Mean=5.88957ms) over 10 runs of the same
+TIME for Shared (racy) using data/uniform.raw on 1 thread: (Median=4.61896ms, Mean=4.62293ms) over 10 runs of the same
+TIME for Shared (corrected) using data/uniform.raw on 1 thread: (Median=71.2441ms, Mean=71.0816ms) over 10 runs of the same
+Number of threads 2
+Shared (racy): sum of bins = 11913633 (should be 16777216), wrong bins = 24. Your histogram is WRONG
+Number of threads 2
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+TIME for Naive using data/peaked.raw on 1 thread: (Median=6.19785ms, Mean=6.18896ms) over 10 runs of the same
+TIME for Shared (racy) using data/peaked.raw on 2 thread: (Median=10.4198ms, Mean=10.5951ms) over 10 runs of the same
+TIME for Shared (corrected) using data/peaked.raw on 2 thread: (Median=178.979ms, Mean=179.271ms) over 10 runs of the same
+Number of threads 2
+Shared (racy): sum of bins = 12973623 (should be 16777216), wrong bins = 256. Your histogram is WRONG
+Number of threads 2
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+TIME for Naive using data/uniform.raw on 1 thread: (Median=5.79329ms, Mean=5.80584ms) over 10 runs of the same
+TIME for Shared (racy) using data/uniform.raw on 2 thread: (Median=96.6407ms, Mean=92.7069ms) over 10 runs of the same
+TIME for Shared (corrected) using data/uniform.raw on 2 thread: (Median=155.127ms, Mean=155.274ms) over 10 runs of the same
+Number of threads 4
+Shared (racy): sum of bins = 5871307 (should be 16777216), wrong bins = 26. Your histogram is WRONG
+Number of threads 4
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+TIME for Naive using data/peaked.raw on 1 thread: (Median=6.62339ms, Mean=6.64936ms) over 10 runs of the same
+TIME for Shared (racy) using data/peaked.raw on 4 thread: (Median=11.4867ms, Mean=11.4933ms) over 10 runs of the same
+TIME for Shared (corrected) using data/peaked.raw on 4 thread: (Median=199.93ms, Mean=199.979ms) over 10 runs of the same
+Number of threads 4
+Shared (racy): sum of bins = 8628879 (should be 16777216), wrong bins = 256. Your histogram is WRONG
+Number of threads 4
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+TIME for Naive using data/uniform.raw on 1 thread: (Median=5.83811ms, Mean=5.86203ms) over 10 runs of the same
+TIME for Shared (racy) using data/uniform.raw on 4 thread: (Median=94.7527ms, Mean=94.1857ms) over 10 runs of the same
+TIME for Shared (corrected) using data/uniform.raw on 4 thread: (Median=133.18ms, Mean=133.283ms) over 10 runs of the same
+Number of threads 8
+Shared (racy): sum of bins = 6993719 (should be 16777216), wrong bins = 25. Your histogram is WRONG
+Number of threads 8
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+TIME for Naive using data/peaked.raw on 1 thread: (Median=6.038ms, Mean=6.03025ms) over 10 runs of the same
+TIME for Shared (racy) using data/peaked.raw on 8 thread: (Median=23.361ms, Mean=23.6848ms) over 10 runs of the same
+TIME for Shared (corrected) using data/peaked.raw on 8 thread: (Median=211.483ms, Mean=211.106ms) over 10 runs of the same
+Number of threads 8
+Shared (racy): sum of bins = 7850823 (should be 16777216), wrong bins = 256. Your histogram is WRONG
+Number of threads 8
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+TIME for Naive using data/uniform.raw on 1 thread: (Median=5.85825ms, Mean=5.87577ms) over 10 runs of the same
+TIME for Shared (racy) using data/uniform.raw on 8 thread: (Median=118.702ms, Mean=117.753ms) over 10 runs of the same
+TIME for Shared (corrected) using data/uniform.raw on 8 thread: (Median=93.1655ms, Mean=93.6436ms) over 10 runs of the same

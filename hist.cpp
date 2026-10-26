@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <omp.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -54,7 +55,7 @@ void hist_shared(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
     }
 }
 
-// comparing histograms
+// Checking histograms correctness and comparing badness by the number of bad bins
 void check(const char* name, vector<uint32_t>& ref, vector<uint32_t>& h, uint32_t n, int T) {
     uint32_t total = 0;
     int wrong = 0;
@@ -66,7 +67,20 @@ void check(const char* name, vector<uint32_t>& ref, vector<uint32_t>& h, uint32_
     cout << name << ": sum of bins = " << total << " (should be " << n << "), wrong bins = " << wrong << (wrong==0 ? ". Your histogram is OK" : ". Your histogram is WRONG") << endl;
 }
 
+// median time
+double median(vector<double> t) {
+    sort(t.begin(), t.end());
+    return t[t.size() / 2];
+}
 
+// mean time
+double mean(vector<double> t) {
+    double sum = 0;
+    for (int i=0; i<t.size(); i++){
+        sum+=t[i];
+    }
+    return sum/t.size();
+}
 
 int main(int argc, char** argv) {
     if (argc < 3) {
@@ -86,6 +100,38 @@ int main(int argc, char** argv) {
 
     hist_shared(img, h, T);
     check("Shared (corrected)", ref, h, n, T);
+
+    // finding the time
+    int runs = 10;
+    vector<double> time(runs);
+
+    // Naive
+    for (int r = 0; r < runs; r++){
+        double start = omp_get_wtime();
+        hist_naive(img, h);
+        time[r] = omp_get_wtime() - start;
+    }
+    cout << "TIME for Naive using " << argv[1] << " on 1 thread: (Median=" << median(time)*1000 <<"ms, Mean=" << mean(time)*1000 << "ms) over " << runs << " runs of the same" << endl;
+
+
+    // Shared racy
+    for (int r = 0; r < runs; r++){
+        double start = omp_get_wtime();
+        hist_shared_racy(img, h, T);
+        time[r] = omp_get_wtime() - start;
+    }
+    cout << "TIME for Shared (racy) using " << argv[1] << " on " << T << " thread: (Median=" << median(time)*1000 <<"ms, Mean=" << mean(time)*1000 << "ms) over " << runs << " runs of the same" << endl;
+
+
+    // Shared corrected
+    for (int r = 0; r < runs; r++){
+        double start = omp_get_wtime();
+        hist_shared(img, h, T);
+        time[r] = omp_get_wtime() - start;
+    }
+    cout << "TIME for Shared (corrected) using " << argv[1] << " on " << T << " thread: (Median=" << median(time)*1000 <<"ms, Mean=" << mean(time)*1000 << "ms) over " << runs << " runs of the same" << endl;
+
+
 
     return 0;
 
