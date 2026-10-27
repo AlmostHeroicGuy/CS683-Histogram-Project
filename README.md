@@ -1,30 +1,16 @@
 # Optimising Multithreaded Histogram Computation on a Multi-core CPU
 
-CS683 (Advanced Computer Architecture) Course project
+CS683 (Advanced Computer Architecture) course project.
 
-## Goal
-Build an image histogram (for this project I am taking it to be just the count of pixels per intensity value, 256 bins) in parallel
-using several methods, measure how each interacts with the CPU hardware using
-`perf` hardware counters, and explain which is fastest and why.
+For this project I am taking a histogram to be just the count of pixels per intensity value (256 bins for an 8-bit image). The idea is to build it in parallel using a few different methods and then measure how each one interacts with the CPU hardware using `perf` hardware counters, and explain which is fastest and why.
 
-## Methods
-| # | Method | What it exposes |
-|---|--------|-----------------|
-| 0 | Naive (single thread) | Correct reference answer |
-| 1 | Shared histogram | Contention on shared counters |
-| 2 | Bin-partitioned | Redundant image reads, branch mispredictions |
-| 3 | Privatized, packed | False sharing |
-| 4 | Privatized, padded | Hopefully the fix (cache-line aligned) |
+So far I have done three methods. Method 0 is a plain single-threaded histogram, which I use as the correct reference answer. Method 1 is a shared histogram where all threads update the same 256 counters. I first wrote it without any protection (the "racy" version) just to show the race condition, where it loses counts, and then fixed it with an atomic increment. Method 2 is bin-partitioned: each thread owns a range of bins and
+scans the whole image, counting only its own bins into a private array. For Checkpoint 2 I plan to do privatized histograms per thread, first packed (to show false sharing) and then padded to cache-line size, which is hopefully the fix.
 
+The test images are 4096x4096, 8-bit grayscale, stored as raw bytes (16 MB each, which is larger than the 12 MB L3 cache). `uniform.raw` has every value 0-255 equally likely, and `peaked.raw` is a Gaussian with mean 128 and std dev 3, so almost all pixels land in bins 119-137 (mean +- 3*std). They are generated with a fixed seed (69) so they are identical on every run, and are not committed to git. I have taken these 2 synthetic images because I wanted to see if methods vary in different image distributions and normal images wouldn't have given this control.
 
-## Test images
-4096*4096 pixels, 8-bit grayscale, raw bytes (16 MB each, larger than the 12 MB L3 cache).
-- `uniform.raw`: every value 0-255 equally likely
-- `peaked.raw`: Gaussian dist, mean 128, std dev 3 (almost all pixels in bins ~119-137, the mean+-3std)
+To build and generate the images:
 
-Generated with a fixed seed (69), so they are identical on every run (not committed to git).
-
-## Build
 ```bash
 mkdir -p data
 g++ -O2 -fopenmp -g -Wall -o gen gen.cpp
@@ -32,32 +18,28 @@ g++ -O2 -fopenmp -g -Wall -o hist hist.cpp
 ./gen
 ```
 
-## Run
-```bash
-./hist <image> <threads> <method>     # image needs the address of the image histograms are being run on, threads is the number of threads methods 1 and 2 will use and method selection is from the list ["naive", "racy", "shared", "binpart", "all" (default)]
+To run: `./hist <image> <threads> <method>`, where method is one of naive, racy, shared, binpart or all (default). If your CPU has performance and efficiency cores, I suggest also setting `OMP_PROC_BIND=true` with `OMP_PLACES`, because otherwise the OS can move threads between core types and the runs get noisy. For example:
 
-# example of a single method run on 4 threads
-# I suggest you to also do OMP_PROC_BIND=true if you have different types of cores (performance and efficiency) as OS can run the thread on different types for different times leading to noisy runs.
+```bash
 OMP_PROC_BIND=true OMP_PLACES="{0},{2},{4},{6}" ./hist data/peaked.raw 4 shared
 ```
 
-## Reproduce my results
+To reproduce my results, set the performance governor and keep the charger plugged in (I believe laptops limit power even in performance mode), then run the two scripts and the plotting script:
+
 ```bash
-echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor   # please keep your charger plugged in, I beleive laptops tend to put limits on power consumption even when in performance mode
-bash run_scaling.sh     # results/scaling.csv
+echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+bash run_scaling.sh     #  results/scaling.csv
 bash run_perf.sh        # results/perf/, results/perf_summary.txt
+python make_plots.py    # figures/ and results/perf_table.csv
 ```
-In my run threads are pinned to the separate physical P-cores (CPUs: 0, 2, 4 ,6. I have avoided the SMT for now). And in 8 thread run I have taken all of my physical cores.
 
-## Results so far (4 threads)
-| Method | Uniform | Peaked | Main cause (perf) |
-|--------|---------|--------|-------------------|
-| Naive (1 thread) | 5.8 ms | 6.0 ms | - |
-| Shared (atomised) | 130 ms | 165 ms | ~100M loads served from another core's cache, IPC 0.06-0.08 |
-| Bin-partitioned | 82 ms | 58 ms | branch misses, over 3x more instructions |
+In my runs the threads are pinned to separate physical P-cores (CPUs 0, 2, 4, 6; I have avoided SMT for now), and the 8-thread run uses all of my physical cores (4 P + 4 E).
 
-Both parallel methods are slower than the naive single threaded one. The racy version loses counts, which can se been in results.
+What I found so far, at 4 threads: 
+The naive single-threaded version takes about 5.8 ms (uniform) and 6.0 ms (peaked). 
+The atomic shared version takes 130 ms and 165 ms, and perf shows around 100 million loads being served from another core's cache, with IPC dropping to 0.06-0.08, so the cores are mostly waiting for the cache line to bounce between them. 
+The bin-partitioned version takes 82 ms and 58 ms; there is no cross-core traffic, but it runs over 3x more instructions (every thread scans the whole image) and has a lot of branch misses (19% on uniform, 9% on peaked). So both parallel methods are currently slower than the single-threaded one. 
+The racy version gives wrong answers and loses up to about half the counts. All the raw numbers are in `results/` and the plots in `figures/`.
 
-## Hardware used by me 
-Intel Core i5-12450H (4 P-cores + 4 E-cores, 12 threads), 12 MB shared L3.
-Full details in `results/env/`.
+Hardware used: Intel Core i5-12450H (4 P-cores + 4 E-cores, 12 threads), 12 MB shared L3.
+Full details are in `results/env/`.
