@@ -19,7 +19,7 @@ using several methods, measure how each interacts with the CPU hardware using
 ## Status
 - [x] Test image generation (uniform + peaked)
 - [x] Method 0: naive reference, verified
-- [x] Method 1: shared (racy just to show the contention leading to wrong work, and then the atomised version)
+- [x] Method 1: shared (racy just to show the race condition leading to wrong work, and then the atomised version)
 - [x] Method 2: bin-partitioned
 - [x] Speedup v/s Threads and perf hardware counter plots
 - [ ] Methods 3-4 (Checkpoint II)
