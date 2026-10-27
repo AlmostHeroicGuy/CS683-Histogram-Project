@@ -1,0 +1,21 @@
+# started on Tue Oct 27 04:55:13 2026
+
+
+ Performance counter stats for './hist data/peaked.raw 4 binpart':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+     6,051,598,026      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+     6,418,849,189      cpu_core/instructions/                                                
+     <not counted>      cpu_atom/branches/                                                      (0.00%)
+     1,970,313,873      cpu_core/branches/                                                    
+     <not counted>      cpu_atom/branch-misses/                                                 (0.00%)
+       178,228,828      cpu_core/branch-misses/                                               
+            30,401      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+
+       0.691526628 seconds time elapsed
+
+       1.425386000 seconds user
+       0.003950000 seconds sys
+
+

@@ -1,0 +1,21 @@
+# started on Tue Oct 27 04:55:10 2026
+
+
+ Performance counter stats for './hist data/peaked.raw 1 naive':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+       326,636,076      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+     1,114,829,622      cpu_core/instructions/                                                
+     <not counted>      cpu_atom/branches/                                                      (0.00%)
+       185,947,588      cpu_core/branches/                                                    
+     <not counted>      cpu_atom/branch-misses/                                                 (0.00%)
+            31,999      cpu_core/branch-misses/                                               
+             1,173      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+
+       0.080994932 seconds time elapsed
+
+       0.075078000 seconds user
+       0.003991000 seconds sys
+
+

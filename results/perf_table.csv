@@ -1,0 +1,11 @@
+image,method,threads,IPC,branch_miss_percent,xsnp_fwd
+uniform,naive,1,3.712,0.015,1426
+uniform,shared,1,0.496,0.007,786
+uniform,shared,4,0.075,0.062,133439245
+uniform,binpart,1,4.401,0.001,973
+uniform,binpart,4,0.559,19.151,34675
+peaked,naive,1,3.413,0.017,1173
+peaked,shared,1,0.493,0.010,1896
+peaked,shared,4,0.064,0.104,89429164
+peaked,binpart,1,4.418,0.005,2408
+peaked,binpart,4,1.061,9.046,30401

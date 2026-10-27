@@ -1,0 +1,21 @@
+# started on Tue Oct 27 04:55:09 2026
+
+
+ Performance counter stats for './hist data/uniform.raw 1 binpart':
+
+       344,016,437      cpu_atom/cycles/                                                        (1.05%)
+       447,505,518      cpu_core/cycles/                                                        (98.95%)
+       440,006,562      cpu_atom/instructions/                                                  (1.05%)
+     1,969,662,823      cpu_core/instructions/                                                  (98.95%)
+        84,148,575      cpu_atom/branches/                                                      (1.05%)
+       576,971,841      cpu_core/branches/                                                      (98.95%)
+         2,284,511      cpu_atom/branch-misses/                                                 (1.05%)
+             6,780      cpu_core/branch-misses/                                                 (98.95%)
+               973      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (98.95%)
+
+       0.105411232 seconds time elapsed
+
+       0.102014000 seconds user
+       0.002999000 seconds sys
+
+

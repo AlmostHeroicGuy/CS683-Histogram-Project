@@ -1,0 +1,5 @@
+=========== Number of threads (Naive has always 1): 1 ===============
+Shared (corrected): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+=========== Number of runs for finding time of each method: 10 ===============
+TIME for shared using data/peaked.raw on 1 threads : (Median=74.5478ms, Mean=74.3353ms)
+CSV,shared,data/peaked.raw,1,74.5478,74.3353

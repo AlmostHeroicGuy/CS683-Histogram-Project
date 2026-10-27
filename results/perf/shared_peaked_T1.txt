@@ -1,0 +1,21 @@
+# started on Tue Oct 27 04:55:10 2026
+
+
+ Performance counter stats for './hist data/peaked.raw 1 shared':
+
+     2,721,467,682      cpu_atom/cycles/                                                        (0.14%)
+     3,595,375,977      cpu_core/cycles/                                                        (99.86%)
+     3,250,401,124      cpu_atom/instructions/                                                  (0.14%)
+     1,774,060,761      cpu_core/instructions/                                                  (99.86%)
+       621,620,636      cpu_atom/branches/                                                      (0.14%)
+       203,486,664      cpu_core/branches/                                                      (99.86%)
+        17,053,383      cpu_atom/branch-misses/                                                 (0.14%)
+            20,751      cpu_core/branch-misses/                                                 (99.86%)
+             1,896      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.86%)
+
+       0.831706086 seconds time elapsed
+
+       0.818703000 seconds user
+       0.005827000 seconds sys
+
+

@@ -1,0 +1,5 @@
+=========== Number of threads (Naive has always 1): 4 ===============
+Bin partitioned (private counters for each thread): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+=========== Number of runs for finding time of each method: 10 ===============
+TIME for binpart using data/peaked.raw on 4 threads : (Median=61.9195ms, Mean=61.4554ms)
+CSV,binpart,data/peaked.raw,4,61.9195,61.4554

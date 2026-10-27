@@ -1,0 +1,4 @@
+=========== Number of threads (Naive has always 1): 1 ===============
+=========== Number of runs for finding time of each method: 10 ===============
+TIME for naive using data/uniform.raw on 1 threads : (Median=5.81755ms, Mean=5.84634ms)
+CSV,naive,data/uniform.raw,1,5.81755,5.84634

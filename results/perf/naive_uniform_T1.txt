@@ -1,0 +1,21 @@
+# started on Tue Oct 27 04:55:07 2026
+
+
+ Performance counter stats for './hist data/uniform.raw 1 naive':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+       300,316,027      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+     1,114,652,127      cpu_core/instructions/                                                
+     <not counted>      cpu_atom/branches/                                                      (0.00%)
+       185,906,030      cpu_core/branches/                                                    
+     <not counted>      cpu_atom/branch-misses/                                                 (0.00%)
+            27,823      cpu_core/branch-misses/                                               
+             1,426      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+
+       0.069676212 seconds time elapsed
+
+       0.065508000 seconds user
+       0.003927000 seconds sys
+
+
