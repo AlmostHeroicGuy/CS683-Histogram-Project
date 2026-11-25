@@ -25,7 +25,7 @@ vector<uint8_t> read_image(const char* path) {
     return img;
 }
 
-// Method 0: plain single-threaded histogram = the CORRECT answer
+// Method 0: plain single-threaded histogram for checking correctness
 void hist_naive(vector<uint8_t>& img, vector<uint32_t>& h) {
     for (int b = 0; b < 256; b++) h[b] = 0;   // all bins start at 0
     for (uint32_t i = 0; i < img.size(); i++){
@@ -72,6 +72,48 @@ void hist_binpart(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
 }
     
 
+// Method 3: privatized but PACKED
+
+void hist_packed(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
+    vector<uint32_t> priv(256 * T, 0);           // T counters for each bin
+
+    #pragma omp parallel num_threads(T)
+    {
+        int id = omp_get_thread_num();
+
+        #pragma omp for                          // here we split the pixels in the threads
+        for (uint32_t i = 0; i < img.size(); i++) {
+            priv[img[i] * T + id]++;             // Counter for this thread only
+        }
+    }
+
+    // adding up the T counters of each bin
+    for (int b = 0; b < 256; b++) {
+        h[b] = 0;
+        for (int t = 0; t < T; t++) h[b] += priv[b * T + t];
+    }
+}
+
+
+
+// Method 4: privatized, SEPARATE
+void hist_private(vector<uint8_t>& img, vector<uint32_t>& h, int T) {
+    for (int b = 0; b < 256; b++) h[b] = 0;
+    #pragma omp parallel num_threads(T)
+    {
+        alignas(64) uint32_t local[256] = {0};   // my private counters, cache-line aligned
+
+        #pragma omp for
+        for (uint32_t i = 0; i < img.size(); i++) {
+            local[img[i]]++;                     
+        }
+
+        for (int b = 0; b < 256; b++) {          
+            #pragma omp atomic
+            h[b] += local[b];
+        }
+    }
+}
 
 // Checking histograms correctness and comparing badness by the number of bad bins
 void check(const char* name, vector<uint32_t>& ref, vector<uint32_t>& h, uint32_t n, int T) {
@@ -105,6 +147,24 @@ void print_stuff(const char* method, const char* image, int T, vector<double>& t
     cout << "CSV," << method << "," << image << "," << T << "," << median(t)*1000 << "," << mean(t)*1000 << endl;
 }
 
+void time_method(int method, const char* name, vector<uint8_t>& img, vector<uint32_t>& h,
+                 int T, const char* image) {
+    int runs = 10;
+    vector<double> time(runs);
+    for (int r = 0; r < runs; r++) {
+        double start = omp_get_wtime();
+        if (method == 0) hist_naive(img, h);
+        if (method == 1) hist_shared_racy(img, h, T);
+        if (method == 2) hist_shared(img, h, T);
+        if (method == 3) hist_binpart(img, h, T);
+        if (method == 4) hist_packed(img, h, T);
+        if (method == 5) hist_private(img, h, T);
+        time[r] = omp_get_wtime() - start;
+    }
+    print_stuff(name, image, (method == 0 ? 1 : T), time);
+}
+
+
 int main(int argc, char** argv) {
     if (argc < 3) {
         cout << "usage: ./hist <image.raw> <number of threads>" << endl;
@@ -122,65 +182,22 @@ int main(int argc, char** argv) {
     
     hist_naive(img, ref);  //using the single thread for checking corretness of the furthur histograms
 
-    if (method == "all" || method == "racy"){
-        hist_shared_racy(img, h, T);
-        check("Shared (racy)", ref, h, n, T);
-    }
-    
-    if (method == "all" || method == "shared"){
-        hist_shared(img, h, T);
-        check("Shared (corrected)", ref, h, n, T);
-    }
 
-    if (method == "all" || method == "binpart"){  
-        hist_binpart(img, h, T);
-        check("Bin partitioned (private counters for each thread)", ref, h, n, T);
-    }
-    
+    //checking the correctness
+    if (method == "all" || method == "racy")    { hist_shared_racy(img, h, T); check("Shared (racy)", ref, h, n, T); }
+    if (method == "all" || method == "shared")  { hist_shared(img, h, T);      check("Shared (atomic)", ref, h, n, T); }
+    if (method == "all" || method == "binpart") { hist_binpart(img, h, T);     check("Bin partitioned", ref, h, n, T); }
+    if (method == "all" || method == "packed")  { hist_packed(img, h, T);      check("Packed private (interleaved)", ref, h, n, T); }
+    if (method == "all" || method == "private") { hist_private(img, h, T);     check("Private (separate arrays)", ref, h, n, T); }
+
     // finding the time
-    int runs = 10;
-    vector<double> time(runs);
-    cout << "=========== Number of runs for finding time of each method: " << runs << " ===============" << endl;
-
-    // Naive
-    if (method == "all" || method == "naive"){
-        for (int r = 0; r < runs; r++){
-            double start = omp_get_wtime();
-            hist_naive(img, h);
-            time[r] = omp_get_wtime() - start;
-        }
-        print_stuff("naive", argv[1], 1, time);
-    }
-
-    // Shared racy
-    if (method == "all" || method == "racy"){
-        for (int r = 0; r < runs; r++){
-            double start = omp_get_wtime();
-            hist_shared_racy(img, h, T);
-            time[r] = omp_get_wtime() - start;
-        }
-        print_stuff("racy", argv[1], T, time);
-    }
-
-    // Shared corrected
-    if (method == "all" || method == "shared"){
-        for (int r = 0; r < runs; r++){
-            double start = omp_get_wtime();
-            hist_shared(img, h, T);
-            time[r] = omp_get_wtime() - start;
-        }
-        print_stuff("shared", argv[1], T, time);
-    }
-
-    // Bin partitioned with private couters
-    if (method == "all" || method == "binpart"){
-        for (int r = 0; r < runs; r++){
-            double start = omp_get_wtime();
-            hist_binpart(img, h, T);
-            time[r] = omp_get_wtime() - start;
-        }
-        print_stuff("binpart", argv[1], T, time);
-    }
+    cout << "=========== Number of runs for finding time of each method: 10 ===============" << endl;
+    if (method == "all" || method == "naive")   time_method(0, "naive",   img, h, T, argv[1]);
+    if (method == "all" || method == "racy")    time_method(1, "racy",    img, h, T, argv[1]);
+    if (method == "all" || method == "shared")  time_method(2, "shared",  img, h, T, argv[1]);
+    if (method == "all" || method == "binpart") time_method(3, "binpart", img, h, T, argv[1]);
+    if (method == "all" || method == "packed")  time_method(4, "packed",  img, h, T, argv[1]);
+    if (method == "all" || method == "private") time_method(5, "private", img, h, T, argv[1]);
 
     return 0;
 }

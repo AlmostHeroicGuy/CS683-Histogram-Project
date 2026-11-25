@@ -1,0 +1,19 @@
+# started on Wed Nov 25 05:53:22 2026
+
+
+ Performance counter stats for './hist data/peaked.raw 4 packed':
+
+     4,362,262,636      cpu_atom/cycles/                                                        (0.09%)
+    21,719,632,284      cpu_core/cycles/                                                        (99.98%)
+     5,094,126,541      cpu_atom/instructions/                                                  (0.09%)
+     1,610,992,051      cpu_core/instructions/                                                  (99.98%)
+         1,380,513      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.98%)
+           407,677      cpu_atom/ocr.demand_rfo.l3_hit.snoop_hitm/                                        (0.09%)
+        97,130,070      cpu_core/ocr.demand_rfo.l3_hit.snoop_hitm/                                        (99.98%)
+
+       1.344076696 seconds time elapsed
+
+       5.299432000 seconds user
+       0.004967000 seconds sys
+
+

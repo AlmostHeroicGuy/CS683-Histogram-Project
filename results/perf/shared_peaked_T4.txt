@@ -1,21 +1,21 @@
-# started on Tue Oct 27 04:55:11 2026
+# started on Wed Nov 25 05:45:42 2026
 
 
  Performance counter stats for './hist data/peaked.raw 4 shared':
 
-     <not counted>      cpu_atom/cycles/                                                        (0.00%)
-    28,637,580,073      cpu_core/cycles/                                                      
-     <not counted>      cpu_atom/instructions/                                                  (0.00%)
-     1,820,534,931      cpu_core/instructions/                                                
-     <not counted>      cpu_atom/branches/                                                      (0.00%)
-       212,279,878      cpu_core/branches/                                                    
-     <not counted>      cpu_atom/branch-misses/                                                 (0.00%)
-           219,856      cpu_core/branch-misses/                                               
-        89,429,164      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+     5,974,396,536      cpu_atom/cycles/                                                        (0.06%)
+    29,896,331,622      cpu_core/cycles/                                                        (99.99%)
+     8,021,374,208      cpu_atom/instructions/                                                  (0.06%)
+     1,813,313,948      cpu_core/instructions/                                                  (99.99%)
+     1,538,743,450      cpu_atom/branches/                                                      (0.06%)
+       210,845,417      cpu_core/branches/                                                      (99.99%)
+        41,433,895      cpu_atom/branch-misses/                                                 (0.06%)
+           141,308      cpu_core/branch-misses/                                                 (99.99%)
+        90,666,358      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.99%)
 
-       1.896574035 seconds time elapsed
+       1.910802896 seconds time elapsed
 
-       6.981446000 seconds user
-       0.010695000 seconds sys
+       7.288299000 seconds user
+       0.003987000 seconds sys
 
 

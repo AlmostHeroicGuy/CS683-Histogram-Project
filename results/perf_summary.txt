@@ -1,70 +1,126 @@
 === results/perf/binpart_peaked_T1.txt
-       442,235,034      cpu_core/cycles/                                                      
-     1,953,832,614      cpu_core/instructions/                                                
-       571,833,942      cpu_core/branches/                                                    
-            28,646      cpu_core/branch-misses/                                               
-             2,408      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
-       0.104758714 seconds time elapsed
+       441,642,193      cpu_core/cycles/                                                      
+     1,953,618,511      cpu_core/instructions/                                                
+       571,809,063      cpu_core/branches/                                                    
+            29,151      cpu_core/branch-misses/                                               
+             2,277      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+       0.103065348 seconds time elapsed
 === results/perf/binpart_peaked_T4.txt
-     6,051,598,026      cpu_core/cycles/                                                      
-     6,418,849,189      cpu_core/instructions/                                                
-     1,970,313,873      cpu_core/branches/                                                    
-       178,228,828      cpu_core/branch-misses/                                               
-            30,401      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
-       0.691526628 seconds time elapsed
+     6,061,914,655      cpu_core/cycles/                                                      
+     6,417,089,146      cpu_core/instructions/                                                
+     1,969,963,421      cpu_core/branches/                                                    
+       178,139,963      cpu_core/branch-misses/                                               
+            25,581      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+       0.656971912 seconds time elapsed
 === results/perf/binpart_uniform_T1.txt
-       447,505,518      cpu_core/cycles/                                                        (98.95%)
-     1,969,662,823      cpu_core/instructions/                                                  (98.95%)
-       576,971,841      cpu_core/branches/                                                      (98.95%)
-             6,780      cpu_core/branch-misses/                                                 (98.95%)
-               973      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (98.95%)
-       0.105411232 seconds time elapsed
+       468,738,249      cpu_core/cycles/                                                        (99.34%)
+     1,965,367,645      cpu_core/instructions/                                                  (99.34%)
+       575,358,623      cpu_core/branches/                                                      (99.34%)
+            18,947      cpu_core/branch-misses/                                                 (99.34%)
+             1,789      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.34%)
+       0.112162056 seconds time elapsed
 === results/perf/binpart_uniform_T4.txt
-    11,449,331,223      cpu_core/cycles/                                                        (99.97%)
-     6,403,626,018      cpu_core/instructions/                                                  (99.97%)
-     1,960,064,051      cpu_core/branches/                                                      (99.97%)
-       375,377,257      cpu_core/branch-misses/                                                 (99.97%)
-            34,675      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.97%)
-       1.022201857 seconds time elapsed
+    11,424,311,201      cpu_core/cycles/                                                        (99.97%)
+     6,403,570,926      cpu_core/instructions/                                                  (99.97%)
+     1,959,989,986      cpu_core/branches/                                                      (99.97%)
+       375,325,236      cpu_core/branch-misses/                                                 (99.97%)
+            28,172      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.97%)
+       0.960791547 seconds time elapsed
 === results/perf/naive_peaked_T1.txt
-       326,636,076      cpu_core/cycles/                                                      
-     1,114,829,622      cpu_core/instructions/                                                
-       185,947,588      cpu_core/branches/                                                    
-            31,999      cpu_core/branch-misses/                                               
-             1,173      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
-       0.080994932 seconds time elapsed
+       310,494,117      cpu_core/cycles/                                                      
+     1,114,550,914      cpu_core/instructions/                                                
+       185,890,585      cpu_core/branches/                                                    
+            27,246      cpu_core/branch-misses/                                               
+             1,748      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+       0.072396000 seconds time elapsed
 === results/perf/naive_uniform_T1.txt
-       300,316,027      cpu_core/cycles/                                                      
-     1,114,652,127      cpu_core/instructions/                                                
-       185,906,030      cpu_core/branches/                                                    
-            27,823      cpu_core/branch-misses/                                               
-             1,426      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
-       0.069676212 seconds time elapsed
+       301,427,198      cpu_core/cycles/                                                        (99.70%)
+     1,117,447,008      cpu_core/instructions/                                                  (99.70%)
+       186,347,279      cpu_core/branches/                                                      (99.70%)
+            27,503      cpu_core/branch-misses/                                                 (99.70%)
+             1,176      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.70%)
+       0.069723607 seconds time elapsed
+=== results/perf/packed_peaked_T1.txt
+       454,421,626      cpu_core/cycles/                                                        (98.94%)
+     1,596,941,000      cpu_core/instructions/                                                  (98.94%)
+       204,005,578      cpu_core/branches/                                                      (98.94%)
+             5,694      cpu_core/branch-misses/                                                 (98.94%)
+               276      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (98.94%)
+       0.104613038 seconds time elapsed
+=== results/perf/packed_peaked_T4.txt
+    21,471,598,402      cpu_core/cycles/                                                        (99.98%)
+     1,610,643,355      cpu_core/instructions/                                                  (99.98%)
+       207,438,539      cpu_core/branches/                                                      (99.98%)
+            96,261      cpu_core/branch-misses/                                                 (99.98%)
+         1,415,528      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.98%)
+       1.332894903 seconds time elapsed
+=== results/perf/packed_uniform_T1.txt
+       458,150,331      cpu_core/cycles/                                                      
+     1,584,613,843      cpu_core/instructions/                                                
+       202,721,832      cpu_core/branches/                                                    
+            29,049      cpu_core/branch-misses/                                               
+             2,614      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+       0.107222078 seconds time elapsed
+=== results/perf/packed_uniform_T4.txt
+    10,568,463,208      cpu_core/cycles/                                                      
+     1,600,781,814      cpu_core/instructions/                                                
+       205,692,683      cpu_core/branches/                                                    
+            94,192      cpu_core/branch-misses/                                               
+        45,113,264      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+       0.661130711 seconds time elapsed
+=== results/perf/private_peaked_T1.txt
+       295,529,615      cpu_core/cycles/                                                        (98.47%)
+     1,042,010,516      cpu_core/instructions/                                                  (98.47%)
+       204,925,418      cpu_core/branches/                                                      (98.47%)
+             6,325      cpu_core/branch-misses/                                                 (98.47%)
+               312      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (98.47%)
+       0.068206191 seconds time elapsed
+=== results/perf/private_peaked_T4.txt
+       307,579,850      cpu_core/cycles/                                                        (98.73%)
+     1,041,227,540      cpu_core/instructions/                                                  (98.73%)
+       204,758,954      cpu_core/branches/                                                      (98.73%)
+            31,999      cpu_core/branch-misses/                                                 (98.73%)
+             2,477      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (98.73%)
+       0.032583488 seconds time elapsed
+=== results/perf/private_uniform_T1.txt
+       266,408,179      cpu_core/cycles/                                                        (98.06%)
+     1,046,330,876      cpu_core/instructions/                                                  (98.06%)
+       205,773,614      cpu_core/branches/                                                      (98.06%)
+             5,439      cpu_core/branch-misses/                                                 (98.06%)
+               832      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (98.06%)
+       0.061844306 seconds time elapsed
+=== results/perf/private_uniform_T4.txt
+       288,483,731      cpu_core/cycles/                                                        (98.33%)
+     1,044,478,336      cpu_core/instructions/                                                  (98.33%)
+       205,414,259      cpu_core/branches/                                                      (98.33%)
+            24,279      cpu_core/branch-misses/                                                 (98.33%)
+             2,159      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (98.33%)
+       0.028479355 seconds time elapsed
 === results/perf/shared_peaked_T1.txt
-     3,595,375,977      cpu_core/cycles/                                                        (99.86%)
-     1,774,060,761      cpu_core/instructions/                                                  (99.86%)
-       203,486,664      cpu_core/branches/                                                      (99.86%)
-            20,751      cpu_core/branch-misses/                                                 (99.86%)
-             1,896      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.86%)
-       0.831706086 seconds time elapsed
+     3,559,137,620      cpu_core/cycles/                                                      
+     1,774,467,735      cpu_core/instructions/                                                
+       203,718,313      cpu_core/branches/                                                    
+            42,922      cpu_core/branch-misses/                                               
+             1,508      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+       0.814888484 seconds time elapsed
 === results/perf/shared_peaked_T4.txt
-    28,637,580,073      cpu_core/cycles/                                                      
-     1,820,534,931      cpu_core/instructions/                                                
-       212,279,878      cpu_core/branches/                                                    
-           219,856      cpu_core/branch-misses/                                               
-        89,429,164      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
-       1.896574035 seconds time elapsed
+    29,896,331,622      cpu_core/cycles/                                                        (99.99%)
+     1,813,313,948      cpu_core/instructions/                                                  (99.99%)
+       210,845,417      cpu_core/branches/                                                      (99.99%)
+           141,308      cpu_core/branch-misses/                                                 (99.99%)
+        90,666,358      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.99%)
+       1.910802896 seconds time elapsed
 === results/perf/shared_uniform_T1.txt
-     3,570,888,053      cpu_core/cycles/                                                        (99.87%)
-     1,772,261,486      cpu_core/instructions/                                                  (99.87%)
-       203,117,481      cpu_core/branches/                                                      (99.87%)
-            13,688      cpu_core/branch-misses/                                                 (99.87%)
-               786      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.87%)
-       0.819154767 seconds time elapsed
+     3,596,739,454      cpu_core/cycles/                                                        (99.87%)
+     1,772,264,594      cpu_core/instructions/                                                  (99.87%)
+       203,123,872      cpu_core/branches/                                                      (99.87%)
+            21,821      cpu_core/branch-misses/                                                 (99.87%)
+               943      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.87%)
+       0.824015358 seconds time elapsed
 === results/perf/shared_uniform_T4.txt
-    24,103,112,567      cpu_core/cycles/                                                      
-     1,804,158,796      cpu_core/instructions/                                                
-       209,184,121      cpu_core/branches/                                                    
-           129,370      cpu_core/branch-misses/                                               
-       133,439,245      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
-       1.492803602 seconds time elapsed
+    23,616,335,850      cpu_core/cycles/                                                      
+     1,811,576,746      cpu_core/instructions/                                                
+       210,710,160      cpu_core/branches/                                                    
+           150,259      cpu_core/branch-misses/                                               
+       128,279,550      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+       1.469264291 seconds time elapsed

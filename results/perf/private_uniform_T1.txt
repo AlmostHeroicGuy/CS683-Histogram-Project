@@ -1,0 +1,21 @@
+# started on Wed Nov 25 05:45:41 2026
+
+
+ Performance counter stats for './hist data/uniform.raw 1 private':
+
+       201,132,225      cpu_atom/cycles/                                                        (1.94%)
+       266,408,179      cpu_core/cycles/                                                        (98.06%)
+       238,292,998      cpu_atom/instructions/                                                  (1.94%)
+     1,046,330,876      cpu_core/instructions/                                                  (98.06%)
+        45,566,213      cpu_atom/branches/                                                      (1.94%)
+       205,773,614      cpu_core/branches/                                                      (98.06%)
+         1,230,733      cpu_atom/branch-misses/                                                 (1.94%)
+             5,439      cpu_core/branch-misses/                                                 (98.06%)
+               832      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (98.06%)
+
+       0.061844306 seconds time elapsed
+
+       0.057622000 seconds user
+       0.003975000 seconds sys
+
+

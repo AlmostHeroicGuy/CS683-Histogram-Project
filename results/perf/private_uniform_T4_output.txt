@@ -1,0 +1,5 @@
+=========== Number of threads (Naive has always 1): 4 ===============
+Private (separate arrays): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+=========== Number of runs for finding time of each method: 10 ===============
+TIME for private using data/uniform.raw on 4 threads : (Median=1.52125ms, Mean=1.54202ms)
+CSV,private,data/uniform.raw,4,1.52125,1.54202

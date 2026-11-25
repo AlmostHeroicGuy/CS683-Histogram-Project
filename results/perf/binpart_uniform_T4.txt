@@ -1,21 +1,21 @@
-# started on Tue Oct 27 04:55:09 2026
+# started on Wed Nov 25 05:45:39 2026
 
 
  Performance counter stats for './hist data/uniform.raw 4 binpart':
 
-     1,779,914,192      cpu_atom/cycles/                                                        (0.18%)
-    11,449,331,223      cpu_core/cycles/                                                        (99.97%)
-     1,977,236,219      cpu_atom/instructions/                                                  (0.18%)
-     6,403,626,018      cpu_core/instructions/                                                  (99.97%)
-       388,063,125      cpu_atom/branches/                                                      (0.18%)
-     1,960,064,051      cpu_core/branches/                                                      (99.97%)
-        10,422,472      cpu_atom/branch-misses/                                                 (0.18%)
-       375,377,257      cpu_core/branch-misses/                                                 (99.97%)
-            34,675      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.97%)
+     1,764,712,789      cpu_atom/cycles/                                                        (0.15%)
+    11,424,311,201      cpu_core/cycles/                                                        (99.97%)
+     1,585,561,098      cpu_atom/instructions/                                                  (0.15%)
+     6,403,570,926      cpu_core/instructions/                                                  (99.97%)
+       328,056,355      cpu_atom/branches/                                                      (0.15%)
+     1,959,989,986      cpu_core/branches/                                                      (99.97%)
+         9,971,756      cpu_atom/branch-misses/                                                 (0.15%)
+       375,325,236      cpu_core/branch-misses/                                                 (99.97%)
+            28,172      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.97%)
 
-       1.022201857 seconds time elapsed
+       0.960791547 seconds time elapsed
 
-       2.740047000 seconds user
-       0.013236000 seconds sys
+       2.725300000 seconds user
+       0.006745000 seconds sys
 
 

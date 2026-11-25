@@ -1,21 +1,21 @@
-# started on Tue Oct 27 04:55:07 2026
+# started on Wed Nov 25 05:45:36 2026
 
 
  Performance counter stats for './hist data/uniform.raw 1 naive':
 
-     <not counted>      cpu_atom/cycles/                                                        (0.00%)
-       300,316,027      cpu_core/cycles/                                                      
-     <not counted>      cpu_atom/instructions/                                                  (0.00%)
-     1,114,652,127      cpu_core/instructions/                                                
-     <not counted>      cpu_atom/branches/                                                      (0.00%)
-       185,906,030      cpu_core/branches/                                                    
-     <not counted>      cpu_atom/branch-misses/                                                 (0.00%)
-            27,823      cpu_core/branch-misses/                                               
-             1,426      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+       222,886,517      cpu_atom/cycles/                                                        (0.30%)
+       301,427,198      cpu_core/cycles/                                                        (99.70%)
+       199,300,692      cpu_atom/instructions/                                                  (0.30%)
+     1,117,447,008      cpu_core/instructions/                                                  (99.70%)
+        41,565,842      cpu_atom/branches/                                                      (0.30%)
+       186,347,279      cpu_core/branches/                                                      (99.70%)
+           531,279      cpu_atom/branch-misses/                                                 (0.30%)
+            27,503      cpu_core/branch-misses/                                                 (99.70%)
+             1,176      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                        (99.70%)
 
-       0.069676212 seconds time elapsed
+       0.069723607 seconds time elapsed
 
-       0.065508000 seconds user
-       0.003927000 seconds sys
+       0.064703000 seconds user
+       0.004828000 seconds sys
 
 

@@ -1,0 +1,5 @@
+=========== Number of threads (Naive has always 1): 1 ===============
+Packed private (interleaved): sum of bins = 16777216 (should be 16777216), wrong bins = 0. Your histogram is OK
+=========== Number of runs for finding time of each method: 10 ===============
+TIME for packed using data/uniform.raw on 1 threads : (Median=8.80805ms, Mean=8.8071ms)
+CSV,packed,data/uniform.raw,1,8.80805,8.8071

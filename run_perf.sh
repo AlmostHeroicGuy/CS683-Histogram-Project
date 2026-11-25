@@ -6,7 +6,7 @@ mkdir -p results/perf
 
 for IMG in uniform peaked; do
     OMP_PLACES="{0}" perf stat -e $EVENTS -o results/perf/naive_${IMG}_T1.txt ./hist data/$IMG.raw 1 naive > results/perf/naive_${IMG}_T1_output.txt
-    for M in shared binpart; do
+    for M in shared binpart packed private; do
         OMP_PLACES="{0}" perf stat -e $EVENTS -o results/perf/${M}_${IMG}_T1.txt ./hist data/$IMG.raw 1 $M > results/perf/${M}_${IMG}_T1_output.txt
         OMP_PLACES="{0},{2},{4},{6}" perf stat -e $EVENTS -o results/perf/${M}_${IMG}_T4.txt ./hist data/$IMG.raw 4 $M > results/perf/${M}_${IMG}_T4_output.txt
     done

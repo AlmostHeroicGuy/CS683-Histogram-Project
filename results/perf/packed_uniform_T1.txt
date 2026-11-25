@@ -1,0 +1,21 @@
+# started on Wed Nov 25 05:45:40 2026
+
+
+ Performance counter stats for './hist data/uniform.raw 1 packed':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+       458,150,331      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+     1,584,613,843      cpu_core/instructions/                                                
+     <not counted>      cpu_atom/branches/                                                      (0.00%)
+       202,721,832      cpu_core/branches/                                                    
+     <not counted>      cpu_atom/branch-misses/                                                 (0.00%)
+            29,049      cpu_core/branch-misses/                                               
+             2,614      cpu_core/mem_load_l3_hit_retired.xsnp_fwd/                                      
+
+       0.107222078 seconds time elapsed
+
+       0.104013000 seconds user
+       0.003005000 seconds sys
+
+

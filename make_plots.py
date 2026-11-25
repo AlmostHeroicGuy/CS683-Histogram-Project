@@ -40,20 +40,22 @@ for subfig, name in zip(subfigs, IMAGES):
 
     naive = np.mean([float(x['median_ms']) for x in relevant_rows if x['method']=='naive'])
 
-    for method in ['shared', 'binpart']: #left racy cuz it gave wrong answer
+    for method in ['shared', 'binpart', 'packed', 'private']: #left racy cuz it gave wrong answer
         points = sorted((int(x["threads"]), float(x["median_ms"])) for x in relevant_rows if x["method"] == method)
         T = [p[0] for p in points] #threads
         S = [naive/p[1] for p in points] #speedup
         
-        subfig.plot(T, S, label=method)
-    subfig.set_ylim(0, 1.2)
-    subfig.set_xscale("log")
+        subfig.plot(T, S, "o-", label=method)
+    subfig.axhline(1, color="gray", linestyle="--", linewidth=1)   # speedup = 1: same as single thread
+    subfig.set_yscale("log")                                       # values go from ~0.03 to ~6
+    subfig.set_xscale("log", base=2)
+    subfig.minorticks_off()
     subfig.set_xticks([1, 2, 4, 8], ["1P", "2P", "4P", "4P+4E"])
     subfig.set_title(f"{name} image (naive = {naive:.1f} ms)")
     subfig.set_xlabel("threads")
     subfig.legend()
 
-subfigs[0].set_ylabel("speedup compared to naive")
+subfigs[0].set_ylabel("speedup compared to naive (higher is better)")
 fig.tight_layout()
 fig.savefig("figures/2_speedup.png")
 
@@ -72,7 +74,8 @@ def read_perf(path):
     return numbers
 
 
-runs = [("naive", 1), ("shared", 1), ("shared", 4), ("binpart", 1), ("binpart", 4)]
+runs = [("naive", 1), ("shared", 1), ("shared", 4), ("binpart", 1), ("binpart", 4),
+        ("packed", 1), ("packed", 4), ("private", 1), ("private", 4)]
 run_names = [f"{m}\n{t}T" for m, t in runs]
 
 ipc_uniform,  ipc_peaked  = [], []
@@ -105,10 +108,10 @@ for image in IMAGES:
 table_file.close()
 
 
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig, axes = plt.subplots(1, 3, figsize=(22, 5))
 
 
-centers = [0, 1, 2, 3, 4]
+centers = list(range(len(runs)))           # 0, 1, ..., 8
 bar_width = 0.4
 uniform_x = [c - 0.2 for c in centers]   # uniform LEFT 
 peaked_x  = [c + 0.2 for c in centers]   # peaked RIGHT
@@ -128,17 +131,17 @@ ax.bar(uniform_x, miss_uniform, width=bar_width, label="uniform")
 ax.bar(peaked_x,  miss_peaked,  width=bar_width, label="peaked")
 ax.set_xticks(centers)
 ax.set_xticklabels(run_names)
-ax.set_title("Branch misses\n(% of branches guessed wrong)")
+ax.set_title("Branch misses\n(% of branches guessed wrong, lower is better)")
 ax.legend()
 
-# cross-core cache transfers (log scale because values range from ~1 thousand to ~100 million)
+# cross-core cache transfers (log scale because values range from ~1kto ~100M)
 ax = axes[2]
 ax.bar(uniform_x, xsnp_uniform, width=bar_width, label="uniform")
 ax.bar(peaked_x,  xsnp_peaked,  width=bar_width, label="peaked")
 ax.set_xticks(centers)
 ax.set_xticklabels(run_names)
 ax.set_yscale("log")
-ax.set_title("Loads served from ANOTHER core's cache\n(xsnp_fwd, log scale)")
+ax.set_title("Loads served from ANOTHER core's cache\n(xsnp_fwd, log scale, lower is better)")
 ax.legend()
 
 fig.tight_layout()
